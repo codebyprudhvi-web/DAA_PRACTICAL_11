@@ -1,0 +1,37 @@
+# Floyd–Warshall Algorithm in Python
+
+INF = float('inf')
+
+def floyd_warshall(graph):
+    """
+    graph: adjacency matrix representation
+           graph[i][j] = weight of edge from i to j
+           INF if no edge exists
+    """
+    n = len(graph)
+    dist = [row[:] for row in graph]  # Copy graph matrix
+
+    # Main algorithm
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+
+    return dist
+
+
+# Example input graph (Adjacency Matrix)
+graph = [
+    [0, 3, INF, 7],
+    [8, 0, 2, INF],
+    [5, INF, 0, 1],
+    [2, INF, INF, 0]
+]
+
+# Run Floyd–Warshall
+result = floyd_warshall(graph)
+
+print("Shortest distance matrix:")
+for row in result:
+    print(row)
